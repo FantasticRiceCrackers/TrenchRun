@@ -5,13 +5,14 @@ public class nodeMovement : MonoBehaviour {
 
 	//public Transform target;
 	public float speed, jumpHeight;
-	//public Vector3 visualize;
+    //public Vector3 visualize;
 
-	private void Start()
-	{
-	}
+    private void OnTriggerEnter(Collider col)
+    {
+        print(col.gameObject.name);
+    }
 
-	private void Update()
+    private void Update()
 	{
 		if(!Input.GetKey(KeyCode.UpArrow) || !Input.GetKey(KeyCode.DownArrow) || !Input.GetKey(KeyCode.LeftArrow) || !Input.GetKey(KeyCode.RightArrow))
 		{
