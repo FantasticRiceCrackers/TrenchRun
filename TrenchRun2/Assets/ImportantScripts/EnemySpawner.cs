@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour {
     public float maxTime, fallSpeed;
     public Transform node1, node2;
     public int spawnAmount;
-    public GameObject enemy1, enemy2;
+    public GameObject enemey;
     private int stateSwitcher;
     private float timer; 
 
@@ -29,9 +29,8 @@ public class EnemySpawner : MonoBehaviour {
         }
         for(int i =0; i < spawnAmount; i++)
         {
-
             stateSwitcher = (int)returnRandom(2);
-            GameObject instance = Spawn(returnRandom(xValue), returnRandom(yValue), stateSwitcher, returnEnemy(stateSwitcher));
+            GameObject instance = Spawn(returnRandom(xValue), returnRandom(yValue), stateSwitcher, enemey);
             EnemyClass instanceOfEnemy = instance.AddComponent<EnemyClass>();
             instanceOfEnemy.value = stateSwitcher;
             instanceOfEnemy.speed = fallSpeed;
@@ -39,15 +38,6 @@ public class EnemySpawner : MonoBehaviour {
             instance = null;
         }
         loop();
-    }
-
-    private GameObject returnEnemy(int state)
-    {
-        if(state != 0)
-        {
-            return enemy1;
-        }
-        return enemy2;
     }
 
     private void loop()
@@ -86,15 +76,6 @@ public class EnemyClass : MonoBehaviour
         else
         {
             comingFromTop = true;
-        }
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if(collision.tag == "obstacle")
-        {
-            print("found");
-            Destroy(this.gameObject);
         }
     }
 

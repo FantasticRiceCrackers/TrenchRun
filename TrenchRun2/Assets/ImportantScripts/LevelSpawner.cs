@@ -50,8 +50,8 @@ public class LevelSpawner : MonoBehaviour {
 			if (run) 
 			{
 				currentInt = Random.Range (0, currentInfo.Length);
-				//abstractRules.speed += 5f;
-				//swapMeshs.spawnAmount += 5;
+				abstractRules.speed += 5f;
+				swapMeshs.spawnAmount += 5;
 				run = false;
 			}
 		}

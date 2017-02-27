@@ -3,7 +3,14 @@ using System.Collections;
 
 public class nodeMovement : MonoBehaviour {
 
-    public float speed;
+	//public Transform target;
+	public float speed, jumpHeight;
+    //public Vector3 visualize;
+
+    private void OnTriggerEnter(Collider col)
+    {
+        print(col.gameObject.name);
+    }
 
     private void Update()
 	{
