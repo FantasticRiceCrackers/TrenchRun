@@ -28,7 +28,7 @@ public class MissleLauncher : MonoBehaviour {
             for (int i = 0; i < fireRate; i++)
             {
                 GameObject instance = Instantiate(missle, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-                instance.AddComponent<objectPorperties>().speed = missleSpeed;
+                instance.AddComponent<objectProperties>().speed = missleSpeed;
             }
         }
     }
@@ -42,7 +42,7 @@ public class MissleLauncher : MonoBehaviour {
     }
 }
 
-public class objectPorperties : MonoBehaviour
+public class objectProperties : MonoBehaviour
 {
     public float speed;
 
