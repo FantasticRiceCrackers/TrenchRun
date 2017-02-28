@@ -29,8 +29,10 @@ public class MissleLauncher : MonoBehaviour {
             {
                 GameObject instance = Instantiate(missle, new Vector3(transform.position.x, transform.position.y, transform.position.z + 5f), Quaternion.identity);
                 instance.AddComponent<objectProperties>().speed = missleSpeed;
+                instance = null;
             }
         }
+        StopAllCoroutines();
     }
 
     public void Update()
@@ -44,11 +46,19 @@ public class MissleLauncher : MonoBehaviour {
 
 public class objectProperties : MonoBehaviour
 {
-    public float speed;
+    public float speed = 2000f;
+    public bool isMovingUp = true; 
 
     private void Update()
     {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+        if(isMovingUp)
+        {
+            transform.Translate(Vector3.up * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * speed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter(Collider col)
