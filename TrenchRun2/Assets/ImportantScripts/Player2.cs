@@ -35,7 +35,7 @@ public class Player2 : MonoBehaviour {
         if (tempObject != null)
         {
             tempObject.position = new Vector3(transform.position.x + Horizontal
-                        , transform.position.y -12.3f, transform.position.z + Vertical);
+                        , transform.position.y -100f, transform.position.z + Vertical);
         }
     }
 
@@ -70,7 +70,12 @@ public class MissleLauncher2 : MonoBehaviour
     //public float speed;
     public int fireRate;
     private bool notUsable = false;
+    private Transform parentOfRetical;
 
+    private void Start()
+    {
+        parentOfRetical = parentObject.transform.parent;
+    }
 
     public void Update()
     {
@@ -101,16 +106,31 @@ public class MissleLauncher2 : MonoBehaviour
             }
             for (int i = 0; i < fireRate; i++)
             {
-                GameObject instance = Instantiate(missle, new Vector3(parentObject.transform.position.x + -Horizontal * 10f,
-                    parentObject.transform.position.y - 12.3f,
-                    parentObject.transform.position.z + -Vertical * 10f), Quaternion.identity);
-                objectProperties prop = instance.AddComponent<objectProperties>();
-                //prop.speed = speed;
-                prop.isMovingUp = false;
-                prop = null;
+                //so i want the object to spawn infront of ship and move in the direction of the retical
+                GameObject instance = Instantiate(missle, new Vector3(parentOfRetical.position.x, parentOfRetical.position.y - 10F, parentOfRetical.position.z +5f), Quaternion.identity);
+                MoveInDirection prop = instance.AddComponent<MoveInDirection>();
                 instance = null;
+                prop.reticalInformation = parentObject.transform;
+                prop.speed = 10f;
+                prop = null;
             }
         }
         StopAllCoroutines();
+    }
+}
+
+public class MoveInDirection : MonoBehaviour
+{
+    public Transform reticalInformation;
+    public float speed;
+    private Vector3 instanceOfDirection;
+    private void Start()
+    {
+        instanceOfDirection = reticalInformation.position - transform.position;
+    }
+    //pretty much we want the object to move on a angle
+    private void Update()
+    {
+        transform.Translate(instanceOfDirection * speed * Time.deltaTime);
     }
 }
