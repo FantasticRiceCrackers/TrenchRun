@@ -107,7 +107,7 @@ public class MissleLauncher2 : MonoBehaviour
             for (int i = 0; i < fireRate; i++)
             {
                 //so i want the object to spawn infront of ship and move in the direction of the retical
-                GameObject instance = Instantiate(missle, new Vector3(parentOfRetical.position.x, parentOfRetical.position.y - 10F, parentOfRetical.position.z +5f), Quaternion.identity);
+                GameObject instance = Instantiate(missle, new Vector3(parentOfRetical.position.x, parentOfRetical.position.y - 5f, parentOfRetical.position.z + 10f), Quaternion.identity);
                 MoveInDirection prop = instance.AddComponent<MoveInDirection>();
                 instance = null;
                 prop.reticalInformation = parentObject.transform;
@@ -122,15 +122,35 @@ public class MissleLauncher2 : MonoBehaviour
 public class MoveInDirection : MonoBehaviour
 {
     public Transform reticalInformation;
-    public float speed;
+    public float speed, timer = 5f;
     private Vector3 instanceOfDirection;
     private void Start()
     {
         instanceOfDirection = reticalInformation.position - transform.position;
+        reticalInformation = null;
     }
     //pretty much we want the object to move on a angle
     private void Update()
     {
         transform.Translate(instanceOfDirection * speed * Time.deltaTime);
+    }
+
+    private IEnumerator selfDestruct()
+    {
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Enemy")
+        {
+            Destroy(col.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }
