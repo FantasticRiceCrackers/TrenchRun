@@ -5,6 +5,7 @@ using UnityEngine;
 public class MissleLauncher : MonoBehaviour {
 
     public GameObject missle;
+    public Transform ReticalPosition;
     public int fireRate;
     public float missleSpeed;
     private bool notUsable = false;
@@ -27,9 +28,12 @@ public class MissleLauncher : MonoBehaviour {
             }
             for (int i = 0; i < fireRate; i++)
             {
-                GameObject instance = Instantiate(missle, new Vector3(transform.position.x, transform.position.y, transform.position.z + 5f), Quaternion.identity);
-                instance.AddComponent<objectProperties>().speed = missleSpeed;
+                GameObject instance = Instantiate(missle, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.identity);
+                MoveInDirection prop = instance.AddComponent<MoveInDirection>();
                 instance = null;
+                prop.reticalInformation = ReticalPosition;
+                prop.speed = 10f;
+                prop = null;
             }
         }
         StopAllCoroutines();
@@ -40,33 +44,6 @@ public class MissleLauncher : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(BurstFire());
-        }
-    }
-}
-
-public class objectProperties : MonoBehaviour
-{
-    public float speed = 2000f;
-    public bool isMovingUp = true; 
-
-    private void Update()
-    {
-        if(isMovingUp)
-        {
-            transform.Translate(Vector3.up * speed * Time.deltaTime);
-        }
-        else
-        {
-            transform.Translate(Vector3.down * speed * Time.deltaTime);
-        }
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        if(col.tag == "Enemy")
-        {
-            Destroy(col.gameObject);
-            Destroy(this.gameObject);
         }
     }
 }

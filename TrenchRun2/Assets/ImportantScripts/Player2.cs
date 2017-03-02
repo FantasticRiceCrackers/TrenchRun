@@ -128,6 +128,7 @@ public class MoveInDirection : MonoBehaviour
     {
         instanceOfDirection = reticalInformation.position - transform.position;
         reticalInformation = null;
+        StartCoroutine(selfDestruct());
     }
     //pretty much we want the object to move on a angle
     private void Update()
